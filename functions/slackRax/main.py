@@ -25,18 +25,22 @@ def make_payload(rax_json):
     alarm_state = rax_json['details']['state']
     alarm_status = rax_json['details']['status']
     check_label = rax_json['check']['label']
+    entity_label = rax_json['entity']['label']
     dashboard_link = rax_json['dashboard_link']
 
     payload = {'attachments': [
         {
-            'fallback': 'ALERT WOW!',
-            'text': 'New Rackspace Monitoring Alert!',
+            'fallback': "Rackspace Monitoring Alert: %s - %s" % (check_label, entity_label),
+            'text': 'Rackspace Monitoring Alert!',
             'fields': [
                 {'title': 'Target',
                  'value': target,
                  'short': True},
                 {'title': 'Check',
                  'value': check_label,
+                 'short': True},
+                {'title': 'Entity Label',
+                 'value': entity_label,
                  'short': True},
                 {'title': 'Status',
                  'value': "%s - %s" % (alarm_state, alarm_status),
